@@ -1,26 +1,26 @@
 import 'package:blog_app/core/theme/app_pallete.dart';
+import 'package:blog_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_field.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SignupPage extends StatefulWidget {
-  static route() => MaterialPageRoute(builder: (context) => const SignupPage());
-  const SignupPage({super.key});
-
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+  static route() => MaterialPageRoute(builder: (context) => LoginPage());
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
-  final name = TextEditingController();
+
   final email = TextEditingController();
   final password = TextEditingController();
   @override
   void dispose() {
     email.dispose();
-    name.dispose();
+
     password.dispose();
     super.dispose();
   }
@@ -39,18 +39,13 @@ class _SignupPageState extends State<SignupPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "Sign Up.",
+                  "Sign In.",
                   style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                AuthField(
-                  hint: "Name",
-                  controller: name,
-                ),
-                const SizedBox(height: 15),
                 AuthField(
                   hint: "Email",
                   controller: email,
@@ -63,21 +58,21 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 const SizedBox(height: 15),
                 AuthGradientButton(
-                  buttonText: "Sign Up",
+                  buttonText: "Sign In",
                   onPressed: () {
                     formKey.currentState?.validate();
                   },
                 ),
                 const SizedBox(height: 30),
                 CupertinoButton(
-                  onPressed: () => Navigator.pop(context,),
+                  onPressed: () => Navigator.push(context, SignupPage.route()),
                   child: RichText(
                     text: TextSpan(
-                      text: "Already Have an account? ",
+                      text: "Don't Have an account? ",
                       style: Theme.of(context).textTheme.titleMedium,
                       children: <InlineSpan>[
                         TextSpan(
-                            text: "Sign in",
+                            text: "Sign up",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium

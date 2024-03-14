@@ -1,5 +1,5 @@
 import 'package:blog_app/core/theme/theme.dart';
-import 'package:blog_app/features/auth/presentation/pages/signup_page.dart';
+import 'package:blog_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: "Blog App",
       theme: AppTheme.darkThemeMode,
-      home: SignupPage(),
+      home: const LoginPage(),
     );
   }
 }

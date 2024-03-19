@@ -20,7 +20,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<String> loginInWithEmailPassword({required String email, required String password}) {
-    // TODO: implement loginInWithEmailPassword
+
     throw UnimplementedError();
   }
 

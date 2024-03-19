@@ -10,7 +10,7 @@ class AuthRepositoryImpl implements AuthRepository {
   const AuthRepositoryImpl(this.remoteDataSource);
   @override
   Future<Either<Failure, String>> loginInWithEmailPassword({required String email, required String password}) {
-    // TODO: implement loginInWithEmailPassword
+    
     throw UnimplementedError();
   }
 

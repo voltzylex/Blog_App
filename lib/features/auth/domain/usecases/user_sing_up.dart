@@ -2,7 +2,8 @@
 import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/features/auth/domain/repository/aut_repository.dart';
 import 'package:blog_app/features/auth/domain/usecases/usercase.dart';
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
+
 
 class UserSignUp implements UserCase<String, UserSignUpParams> {
   final AuthRepository authRepository;

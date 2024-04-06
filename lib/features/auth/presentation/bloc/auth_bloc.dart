@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blog_app/features/auth/domain/entities/user.dart';
 import 'package:blog_app/features/auth/domain/usecases/current_user.dart';
 import 'package:blog_app/features/auth/domain/usecases/user_login.dart';
@@ -27,7 +29,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
   void _isUserLoggedIn(AuthIsUserLoggedIn auth, Emitter<AuthState> emit) async {
     final res = await _currentUser(NoParams());
-    res.fold((l) => AuthFailure(l.message), (r) => AuthSuccess(uid: r));
+    res.fold((l) => AuthFailure(l.message), (r) {
+      log("On Auth is User Logged In ${r.email}");
+      AuthSuccess(uid: r);
+    });
   }
 
   void _onAuthSignUp(AuthSignUp event, Emitter<AuthState> emit) async {

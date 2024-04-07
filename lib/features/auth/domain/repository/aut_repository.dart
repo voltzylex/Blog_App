@@ -1,5 +1,5 @@
 import "package:blog_app/core/error/failure.dart";
-import "package:blog_app/features/auth/domain/entities/user.dart";
+import "package:blog_app/core/common/entities/user.dart";
 // ignore: depend_on_referenced_packages
 import "package:fpdart/fpdart.dart";
 

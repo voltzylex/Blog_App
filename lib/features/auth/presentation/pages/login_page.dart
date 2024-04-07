@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
             showSnackBar(context, message: state.message);
           }
           if (state is AuthSuccess) {
-            showSnackBar(context, message: state.uid.email);
+            showSnackBar(context, message: state.user.email);
           }
         },
         builder: (context, state) {

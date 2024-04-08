@@ -38,7 +38,21 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       title: "Blog App",
       theme: AppTheme.darkThemeMode,
-      home: const LoginPage(),
+      home: BlocSelector<AppUserCubit, AppUserState, bool>(
+        selector: (state) {
+          return state is AppUserLoggedIn;
+        },
+        builder: (context, isLoggedIn) {
+          if (isLoggedIn) {
+            return const Scaffold(
+              body: Center(
+                child: Text("Logged in !"),
+              ),
+            );
+          }
+          return const LoginPage();
+        },
+      ),
     );
   }
 }

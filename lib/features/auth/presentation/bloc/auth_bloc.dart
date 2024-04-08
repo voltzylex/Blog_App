@@ -25,6 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _currentUser = currentUser,
         _appUserCubit = appUserCubit,
         super(AuthInitial()) {
+    on<AuthEvent>((event, emit) => emit(AuthLoading()));
     on<AuthSignUp>(_onAuthSignUp);
     on<AuthLogin>(_onAuthLogin);
     on<AuthIsUserLoggedIn>(_isUserLoggedIn);
@@ -35,7 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthSignUp(AuthSignUp event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    // emit(AuthLoading());
     final res = await _userSignUp(UserSignUpParams(
       name: event.name,
       email: event.email,
@@ -46,7 +47,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthLogin(AuthLogin event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    // emit(AuthLoading());
     final res = await _userLogin(UserLoginParams(email: event.email, password: event.password));
     res.fold((l) => emit(AuthFailure(l.message)), (user) => _onAuthSuccess(user, emit));
   }

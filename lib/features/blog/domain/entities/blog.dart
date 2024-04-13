@@ -1,3 +1,4 @@
+
 class Blog {
   final String id;
   final String title;
@@ -20,4 +21,5 @@ class Blog {
     required this.updatedAt,
     required this.topics,
   });
+
 }

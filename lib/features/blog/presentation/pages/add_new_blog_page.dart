@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:blog_app/core/common/utils/pick_image.dart';
 import 'package:blog_app/core/theme/app_pallete.dart';
 import 'package:blog_app/features/blog/presentation/widgets/blog_editor.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -15,10 +18,19 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
   final TextEditingController blogTitle = TextEditingController();
   final TextEditingController blogContent = TextEditingController();
   List<String> selectedTopics = [];
+  File? image;
+  selectImage() async {
+    image = await pickImage();
+    if (image != null) {
+      setState(() {});
+    }
+  }
+
   @override
   void dispose() {
     blogTitle.dispose();
     blogContent.dispose();
+
     super.dispose();
   }
 
@@ -37,28 +49,43 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            DottedBorder(
-              color: AppPallete.borderColor,
-              dashPattern: const [10, 4],
-              radius: const Radius.circular(10),
-              borderType: BorderType.RRect,
-              strokeCap: StrokeCap.round,
-              child: const SizedBox(
-                  height: 150,
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.folder_open_rounded,
-                        size: 50,
+            InkWell(
+              onTap: selectImage,
+              child: image != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: SizedBox(
+                        height: 150,
+                        width: double.infinity,
+                        child: Image.file(
+                          image!,
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                      Text(
-                        'Select Your Image',
-                        style: TextStyle(),
-                      ),
-                    ],
-                  )),
+                    )
+                  : DottedBorder(
+                      color: AppPallete.borderColor,
+                      dashPattern: const [10, 4],
+                      radius: const Radius.circular(10),
+                      borderType: BorderType.RRect,
+                      strokeCap: StrokeCap.round,
+                      child: const SizedBox(
+                          height: 150,
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.folder_open_rounded,
+                                size: 50,
+                              ),
+                              Text(
+                                'Select Your Image',
+                                style: TextStyle(),
+                              ),
+                            ],
+                          )),
+                    ),
             ),
             const SizedBox(height: 10),
             SingleChildScrollView(

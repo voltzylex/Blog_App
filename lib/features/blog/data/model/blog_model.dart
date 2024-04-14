@@ -1,4 +1,3 @@
-
 import 'package:blog_app/features/blog/domain/entities/blog.dart';
 
 class BlogModel extends Blog {
@@ -23,19 +22,18 @@ class BlogModel extends Blog {
     };
   }
 
-  factory BlogModel.fromJson
-  (Map<String, dynamic> map) {
+  factory BlogModel.fromJson(Map<String, dynamic> map) {
     return BlogModel(
       id: map['id'] as String,
       title: map['title'] as String,
       content: map['content'] as String,
-      imageUrl: map['imageUrl'] as String,
+      imageUrl: map['image_url'] as String,
       posterId: map['poster_id'] as String,
-      updatedAt: map["update_at"] == null? DateTime.now() : DateTime.parse(map["update_at"]),
+      updatedAt: map["update_at"] == null ? DateTime.now() : DateTime.parse(map["update_at"]),
       topics: List<String>.from(map['topics'] ?? []),
     );
   }
-  
+
   BlogModel copyWith({
     String? id,
     String? title,

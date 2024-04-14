@@ -9,7 +9,7 @@ import 'package:blog_app/features/blog/domain/repositories/blog_repositories.dar
 import 'package:fpdart/fpdart.dart';
 import 'package:uuid/uuid.dart';
 
-class BlogRepositoryImpl implements BlogRepoistory {
+class BlogRepositoryImpl implements BlogRepository {
   final BlogRemoteDataSource blogRemoteDataSource;
 
   BlogRepositoryImpl({required this.blogRemoteDataSource});

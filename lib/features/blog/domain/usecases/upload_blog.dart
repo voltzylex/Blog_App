@@ -7,17 +7,18 @@ import 'package:blog_app/features/blog/domain/repositories/blog_repositories.dar
 import 'package:fpdart/src/either.dart';
 
 class UploadBlog implements UserCase<Blog, UploadBlogParams> {
-  final BlogRepoistory blogRepoistory;
+  final BlogRepository blogRepoistory;
 
   UploadBlog({required this.blogRepoistory});
   @override
   Future<Either<Failure, Blog>> call(UploadBlogParams params) {
     return blogRepoistory.uploadBlog(
-        image: params.image,
-        title: params.title,
-        content: params.content,
-        postId: params.posterId,
-        topics: params.topics,);
+      image: params.image,
+      title: params.title,
+      content: params.content,
+      postId: params.posterId,
+      topics: params.topics,
+    );
   }
 }
 

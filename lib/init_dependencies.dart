@@ -7,12 +7,18 @@ import 'package:blog_app/features/auth/domain/usecases/current_user.dart';
 import 'package:blog_app/features/auth/domain/usecases/user_login.dart';
 import 'package:blog_app/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:blog_app/features/blog/data/datasources/blog_remote_data_source.dart';
+import 'package:blog_app/features/blog/data/repositories/blog_repositories_impl.dart';
+import 'package:blog_app/features/blog/domain/repositories/blog_repositories.dart';
+import 'package:blog_app/features/blog/domain/usecases/upload_blog.dart';
+import 'package:blog_app/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final serviceLocator = GetIt.instance;
 Future<void> initDependencies() async {
   _initAuth();
+  _initBlog();
   final supabase = await Supabase.initialize(url: AppSecrets.supabaseUrl, anonKey: AppSecrets.supabaseAnon);
   serviceLocator.registerLazySingleton(() => supabase.client);
   // Core
@@ -54,6 +60,46 @@ void _initAuth() {
         userSignUp: serviceLocator(),
         userLogin: serviceLocator(),
         appUserCubit: serviceLocator(),
+      ),
+    );
+}
+
+void _initBlog() {
+  serviceLocator
+    ..registerFactory<BlogRemoteDataSource>(
+      () => BlogRemoteDataSourceImpl(
+        supabaseClient: serviceLocator(),
+      ),
+    )
+    // ..registerFactory<BlogLocalDataSource>(
+    //   () => BlogLocalDataSourceImpl(
+    //     serviceLocator(),
+    //   ),
+    // )
+    // Repository
+    ..registerFactory<BlogRepository>(
+      () => BlogRepositoryImpl(
+        blogRemoteDataSource: serviceLocator(),
+        // serviceLocator(),
+        // serviceLocator(),
+      ),
+    )
+    // Usecases
+    ..registerFactory(
+      () => UploadBlog(
+        blogRepoistory: serviceLocator(),
+      ),
+    )
+    // ..registerFactory(
+    //   () => GetAllBlogs(
+    //     serviceLocator(),
+    //   ),
+    // )
+    // Bloc
+    ..registerLazySingleton(
+      () => BlogBloc(
+        uploadBlog: serviceLocator(),
+        // getAllBlogs: serviceLocator(),
       ),
     );
 }

@@ -12,6 +12,7 @@ class Blog {
 
   final DateTime updatedAt;
   final List<String> topics;
+  final String? posterName;
 
   Blog({
     required this.id,
@@ -21,7 +22,6 @@ class Blog {
     required this.posterId,
     required this.updatedAt,
     required this.topics,
+    this.posterName
   });
-
-
 }

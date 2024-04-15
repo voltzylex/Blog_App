@@ -67,7 +67,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
             log("Error is ${state.message}");
             return showSnackBar(context, message: state.message);
           }
-          if (state is BlogSuccess) {
+          if (state is BlogUploadSuccess) {
             Navigator.pushAndRemoveUntil(context, BlogPage.route(), (route) => false);
             return;
           }

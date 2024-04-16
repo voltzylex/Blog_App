@@ -4,7 +4,8 @@ import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/features/auth/domain/usecases/usercase.dart';
 import 'package:blog_app/features/blog/domain/entities/blog.dart';
 import 'package:blog_app/features/blog/domain/repositories/blog_repositories.dart';
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
+
 
 class UploadBlog implements UserCase<Blog, UploadBlogParams> {
   final BlogRepository blogRepoistory;

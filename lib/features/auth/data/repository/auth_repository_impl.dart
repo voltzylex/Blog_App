@@ -14,6 +14,13 @@ class AuthRepositoryImpl implements AuthRepository {
   const AuthRepositoryImpl(this.remoteDataSource, this.connectionChecker);
   @override
   Future<Either<Failure, User>> getCurrentUser() async {
+    if(!await (connectionChecker.isConnected)){
+      final session = remoteDataSource.currentUserSession;
+      if(session == null){
+         return left(Failure("User is Not Logged in"));
+      }
+      return right(UserModel(id:session.user.id,email:session.user.email,name:""));
+    }
     try {
       final user = await remoteDataSource.getCurrentUserData();
       if (user != null) {

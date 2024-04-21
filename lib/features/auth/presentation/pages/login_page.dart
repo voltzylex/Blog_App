@@ -5,6 +5,7 @@ import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_field.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_gradient_button.dart';
+import 'package:blog_app/features/blog/presentation/pages/blog_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,8 @@ class _LoginPageState extends State<LoginPage> {
           }
           if (state is AuthSuccess) {
             showSnackBar(context, message: state.user.email);
+            Navigator.pushAndRemoveUntil(
+                context, BlogPage.route(), (route) => false);
           }
         },
         builder: (context, state) {
@@ -57,7 +60,8 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     const Text(
                       "Sign In.",
-                      style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
@@ -78,13 +82,15 @@ class _LoginPageState extends State<LoginPage> {
                       buttonText: "Sign In",
                       onPressed: () {
                         if (formKey.currentState?.validate() ?? false) {
-                          context.read<AuthBloc>().add(AuthLogin(email: email.text, password: password.text));
+                          context.read<AuthBloc>().add(AuthLogin(
+                              email: email.text, password: password.text));
                         }
                       },
                     ),
                     const SizedBox(height: 30),
                     CupertinoButton(
-                      onPressed: () => Navigator.push(context, SignupPage.route()),
+                      onPressed: () =>
+                          Navigator.push(context, SignupPage.route()),
                       child: RichText(
                         text: TextSpan(
                           text: "Don't Have an account? ",
@@ -95,7 +101,9 @@ class _LoginPageState extends State<LoginPage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
-                                    ?.copyWith(color: AppPallete.gradient2, fontWeight: FontWeight.bold)),
+                                    ?.copyWith(
+                                        color: AppPallete.gradient2,
+                                        fontWeight: FontWeight.bold)),
                           ],
                         ),
                       ),

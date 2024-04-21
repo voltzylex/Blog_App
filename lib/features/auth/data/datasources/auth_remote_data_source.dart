@@ -1,7 +1,9 @@
 import "dart:developer";
 
 import "package:blog_app/core/error/exceptions.dart";
+import "package:blog_app/core/error/failure.dart";
 import "package:blog_app/features/auth/data/models/user_model.dart";
+import "package:fpdart/fpdart.dart";
 import "package:supabase_flutter/supabase_flutter.dart";
 
 abstract interface class AuthRemoteDataSource {
@@ -25,12 +27,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   AuthRemoteDataSourceImpl({required this.client});
   @override
-  
   Session? get currentUserSession => client.auth.currentSession;
 
   /// Auth Remote Data Source Impl used for Login with password
   @override
-  Future<UserModel> loginInWithEmailPassword({required String email, required String password}) async {
+  Future<UserModel> loginInWithEmailPassword(
+      {required String email, required String password}) async {
     try {
       final response = await client.auth.signInWithPassword(
         email: email,
@@ -41,6 +43,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw const ServerException(message: "User is Null");
       }
       return UserModel.fromJson(response.user!.toJson());
+    } on AuthException catch (e) {
+      throw ServerException(message: e.message);
     } catch (e) {
       log("Auth remove data Source $e");
       throw ServerException(message: e.toString());
@@ -49,9 +53,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<UserModel> signUpWithEmailPassword(
-      {required String name, required String email, required String password}) async {
+      {required String name,
+      required String email,
+      required String password}) async {
     try {
-      final response = await client.auth.signUp(email: email, password: password, data: {"name": name});
+      final response = await client.auth
+          .signUp(email: email, password: password, data: {"name": name});
       log("Auth remove data Source ${response.user}");
       if (response.user == null) {
         throw const ServerException(message: "User is Null");
@@ -71,7 +78,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
               "id",
               currentUserSession!.user.id,
             );
-        return UserModel.fromJson(userData.first).copyWith(email: currentUserSession?.user.email);
+        return UserModel.fromJson(userData.first)
+            .copyWith(email: currentUserSession?.user.email);
       }
       return null;
     } catch (e) {
